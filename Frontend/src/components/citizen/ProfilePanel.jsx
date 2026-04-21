@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import API_URL from '../../config.js';
 
 const ProfilePanel = ({ activePanel, user: initialUser, setUser: setGlobalUser }) => {
   const [localUser, setLocalUser] = useState(initialUser);
@@ -56,7 +57,7 @@ const ProfilePanel = ({ activePanel, user: initialUser, setUser: setGlobalUser }
 
     try {
       const token = localStorage.getItem("citizen_token");
-      const res = await fetch("http://localhost:5000/api/v1/citizen/profile", {
+      const res = await fetch(API_URL + "/citizen/profile", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -91,7 +92,7 @@ const ProfilePanel = ({ activePanel, user: initialUser, setUser: setGlobalUser }
     setPwdMessage({ type: "", text: "" });
     try {
         const token = localStorage.getItem("citizen_token");
-        const res = await fetch("http://localhost:5000/api/v1/citizen/update-password", {
+        const res = await fetch(API_URL + "/citizen/update-password", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

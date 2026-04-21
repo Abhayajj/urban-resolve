@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { QRCodeSVG } from 'qrcode.react';
+import API_URL from '../../config.js';
 
 export default function ProfilePanel({ user }) {
   const [showPwdForm, setShowPwdForm] = useState(false);
@@ -18,7 +19,7 @@ export default function ProfilePanel({ user }) {
       setError("");
       setSuccess("");
       const token = localStorage.getItem("dept_token");
-      const res = await fetch("http://localhost:5000/api/v1/admin/update-dept-password", {
+      const res = await fetch(API_URL + "/admin/update-dept-password", {
         method: "PUT",
         headers: { 
             "Content-Type": "application/json",

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import API_URL from '../../config.js';
 
 export default function DeptTopbar({ user, setActivePanel }) {
   const [showProfile, setShowProfile] = useState(false);
@@ -9,7 +10,7 @@ export default function DeptTopbar({ user, setActivePanel }) {
     const fetchNotifs = async () => {
       try {
         const token = localStorage.getItem("dept_token");
-        const res = await fetch("http://localhost:5000/api/v1/notifications/all", {
+        const res = await fetch(API_URL + "/notifications/all", {
           headers: { "Authorization": `Bearer ${token}` }
         });
         const data = await res.json();

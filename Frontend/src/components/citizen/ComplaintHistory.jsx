@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import API_URL from '../../config.js';
 
 export default function ComplaintHistory({ setActivePanel }) {
   const [complaints, setComplaints] = useState([]);
@@ -8,7 +9,7 @@ export default function ComplaintHistory({ setActivePanel }) {
     const fetchComplaints = async () => {
       try {
         const token = localStorage.getItem("citizen_token");
-        const res = await fetch("http://localhost:5000/api/v1/complaints/my", {
+        const res = await fetch(API_URL + "/complaints/my", {
           headers: {
             "Authorization": `Bearer ${token}`
           }

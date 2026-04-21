@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import API_URL from "../../config";
 
 export default function DashboardPanel({ setActivePanel }) {
   const [stats, setStats] = useState({
@@ -18,9 +19,9 @@ export default function DashboardPanel({ setActivePanel }) {
         const headers = { "Authorization": `Bearer ${token}` };
 
         const [citRes, deptRes, compRes] = await Promise.all([
-          fetch("http://localhost:5000/api/v1/admin/citizens", { headers }),
-          fetch("http://localhost:5000/api/v1/admin/departments", { headers }),
-          fetch("http://localhost:5000/api/v1/complaints", { headers })
+          fetch(`${API_URL}/admin/citizens`, { headers }),
+          fetch(`${API_URL}/admin/departments`, { headers }),
+          fetch(`${API_URL}/complaints`, { headers })
         ]);
 
         const citizens = await citRes.json();

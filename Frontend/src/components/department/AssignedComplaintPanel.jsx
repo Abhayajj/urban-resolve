@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import API_URL from '../../config.js';
 
 export default function AssignedComplaintsPanel({ activePanel, user }) {
 
@@ -16,7 +17,7 @@ export default function AssignedComplaintsPanel({ activePanel, user }) {
   const fetchComplaints = async () => {
     try {
       const token = localStorage.getItem("dept_token");
-      const res = await fetch("http://localhost:5000/api/v1/complaints", {
+      const res = await fetch(API_URL + "/complaints", {
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`
@@ -59,7 +60,7 @@ export default function AssignedComplaintsPanel({ activePanel, user }) {
       setLoadingId(id);
       const token = localStorage.getItem("dept_token");
 
-      const res = await fetch(`http://localhost:5000/api/v1/complaints/${id}`, {
+      const res = await fetch(`${API_URL}/complaints/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

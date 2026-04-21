@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import API_URL from '../../config.js';
 
 export default function FileComplaintPanel({ activePanel, setActivePanel }) {
   const [category, setCategory] = useState("Water Supply");
@@ -74,7 +75,7 @@ export default function FileComplaintPanel({ activePanel, setActivePanel }) {
         return;
       }
 
-      const res = await fetch("http://localhost:5000/api/v1/complaints", {
+      const res = await fetch(API_URL + "/complaints", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

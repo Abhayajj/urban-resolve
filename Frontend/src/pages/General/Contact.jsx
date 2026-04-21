@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import API_URL from '../../config.js';
 
 function Contact() {
     const contactCards = [
@@ -22,7 +23,7 @@ function Contact() {
         setIsError(false);
 
         try {
-            const res = await fetch("http://localhost:5000/api/v1/contact", {
+            const res = await fetch(API_URL + "/contact", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ name, email, subject, message })

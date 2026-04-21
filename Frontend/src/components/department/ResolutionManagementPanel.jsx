@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import API_URL from '../../config.js';
 
 export default function ResolutionManagementPanel({ activePanel, user }) {
   const [complaints, setComplaints] = useState([]);
@@ -11,7 +12,7 @@ export default function ResolutionManagementPanel({ activePanel, user }) {
     const fetchComplaints = async () => {
       try {
         const token = localStorage.getItem("dept_token");
-        const res = await fetch("http://localhost:5000/api/v1/complaints", {
+        const res = await fetch(API_URL + "/complaints", {
           headers: { "Authorization": `Bearer ${token}` }
         });
         const data = await res.json();
@@ -37,7 +38,7 @@ export default function ResolutionManagementPanel({ activePanel, user }) {
     try {
       setLoading(true);
       const token = localStorage.getItem("dept_token");
-      const res = await fetch(`http://localhost:5000/api/v1/complaints/${selectedId}`, {
+      const res = await fetch(`${API_URL}/complaints/${selectedId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

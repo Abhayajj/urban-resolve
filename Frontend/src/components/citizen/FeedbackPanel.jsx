@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import API_URL from '../../config.js';
 
 export default function FeedbackPanel({ activePanel }) {
   const [resolvedComplaints, setResolvedComplaints] = useState([]);
@@ -8,7 +9,7 @@ export default function FeedbackPanel({ activePanel }) {
   const fetchResolved = async () => {
     try {
       const token = localStorage.getItem("citizen_token");
-      const res = await fetch("http://localhost:5000/api/v1/complaints/my", {
+      const res = await fetch(API_URL + "/complaints/my", {
         headers: { "Authorization": `Bearer ${token}` }
       });
       const data = await res.json();
@@ -54,7 +55,7 @@ export default function FeedbackPanel({ activePanel }) {
       const token = localStorage.getItem("citizen_token");
       const { rating, comment } = feedbacks[id];
       
-      const res = await fetch(`http://localhost:5000/api/v1/complaints/${id}/feedback`, {
+      const res = await fetch(`${API_URL}/complaints/${id}/feedback`, {
         method: "POST",
         headers: { 
             "Content-Type": "application/json",

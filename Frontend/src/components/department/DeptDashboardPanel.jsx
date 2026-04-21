@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title } from 'chart.js';
 import { Pie, Bar } from 'react-chartjs-2';
+import API_URL from '../../config.js';
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title);
 
@@ -12,7 +13,7 @@ export default function DeptDashboardPanel({ user }) {
     const fetchStats = async () => {
       try {
         const token = localStorage.getItem("dept_token");
-        const res = await fetch("http://localhost:5000/api/v1/complaints", {
+        const res = await fetch(API_URL + "/complaints", {
           headers: { "Authorization": `Bearer ${token}` }
         });
         const data = await res.json();

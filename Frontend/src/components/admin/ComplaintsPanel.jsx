@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import API_URL from '../../config.js';
 
 function ComplaintsPanel() {
   const [complaints, setComplaints] = useState([]);
@@ -12,7 +13,7 @@ function ComplaintsPanel() {
       try {
         setLoading(true);
         const token = localStorage.getItem("admin_token");
-        const res = await fetch("http://localhost:5000/api/v1/complaints", {
+        const res = await fetch(API_URL + "/complaints", {
           headers: { "Authorization": `Bearer ${token}` }
         });
         const data = await res.json();

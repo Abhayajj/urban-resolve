@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import API_URL from '../../config.js';
 
 function Login() {
     const navigate = useNavigate();
@@ -16,7 +17,7 @@ function Login() {
         // Simulate Google Authentication sequence
         setTimeout(async () => {
             try {
-                const res = await fetch("http://localhost:5000/api/v1/citizen/google-mock-login", {
+                const res = await fetch(API_URL + "/citizen/google-mock-login", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ 
@@ -46,7 +47,7 @@ function Login() {
         setLoading(true);
         setError("");
         try {
-            const res = await fetch("http://localhost:5000/api/v1/citizen/login", {
+            const res = await fetch(API_URL + "/citizen/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email, password })

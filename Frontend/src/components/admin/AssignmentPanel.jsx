@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import API_URL from '../../config.js';
 
 export default function AssignmentPanel() {
   const [complaints, setComplaints] = useState([]);
@@ -10,8 +11,8 @@ export default function AssignmentPanel() {
       const token = localStorage.getItem("admin_token");
       const headers = { "Authorization": `Bearer ${token}` };
       const [compRes, deptRes] = await Promise.all([
-        fetch("http://localhost:5000/api/v1/complaints", { headers }),
-        fetch("http://localhost:5000/api/v1/admin/departments", { headers })
+        fetch(API_URL + "/complaints", { headers }),
+        fetch(API_URL + "/admin/departments", { headers })
       ]);
       const comps = await compRes.json();
       setComplaints(comps.filter(c => !c.departmentAssigned));
@@ -31,7 +32,7 @@ export default function AssignmentPanel() {
     if (!deptId) return alert("Select a department");
     try {
       const token = localStorage.getItem("admin_token");
-      const res = await fetch(`http://localhost:5000/api/v1/complaints/${complaintId}`, {
+      const res = await fetch(`${API_URL}/complaints/${complaintId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

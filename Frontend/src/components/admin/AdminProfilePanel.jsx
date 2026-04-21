@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import API_URL from '../../config.js';
 
 export default function AdminProfilePanel({ user }) {
     const [showPwdForm, setShowPwdForm] = useState(false);
@@ -13,7 +14,7 @@ export default function AdminProfilePanel({ user }) {
         try {
             setLoading(true);
             const token = localStorage.getItem("admin_token");
-            const res = await fetch("http://localhost:5000/api/v1/admin/update-password", {
+            const res = await fetch(API_URL + "/admin/update-password", {
                 method: "PUT",
                 headers: { 
                     "Content-Type": "application/json",

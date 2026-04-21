@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import API_URL from '../../config.js';
 
 export default function AdminLoginPanel() {
   const [email, setEmail] = useState("");
@@ -11,7 +12,7 @@ export default function AdminLoginPanel() {
     try {
       setLoading(true);
       setError("");
-      const res = await fetch("http://localhost:5000/api/v1/admin/login", {
+      const res = await fetch(API_URL + "/admin/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password })

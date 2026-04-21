@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import API_URL from '../../config.js';
 
 export default function DeptLoginPanel() {
   const [email, setEmail] = useState("");
@@ -12,7 +13,7 @@ export default function DeptLoginPanel() {
     try {
       setLoading(true);
       setError("");
-      const res = await fetch("http://localhost:5000/api/v1/admin/login-department", {
+      const res = await fetch(API_URL + "/admin/login-department", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password, departmentName: department })

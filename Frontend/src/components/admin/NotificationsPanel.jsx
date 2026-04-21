@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import API_URL from '../../config.js';
 
 export default function NotificationsPanel() {
   const [title, setTitle] = useState("");
@@ -12,7 +13,7 @@ export default function NotificationsPanel() {
   const fetchNotifications = async () => {
     try {
       const token = localStorage.getItem("admin_token");
-      const res = await fetch("http://localhost:5000/api/v1/notifications/all", {
+      const res = await fetch(API_URL + "/notifications/all", {
         headers: { "Authorization": `Bearer ${token}` }
       });
       const data = await res.json();
@@ -33,7 +34,7 @@ export default function NotificationsPanel() {
     setLoading(true);
     try {
       const token = localStorage.getItem("admin_token");
-      const res = await fetch("http://localhost:5000/api/v1/notifications", {
+      const res = await fetch(API_URL + "/notifications", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

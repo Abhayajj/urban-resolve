@@ -8,7 +8,7 @@ export default function NotificationsPanel({ activePanel, setActivePanel, user }
     const fetchNotifications = async () => {
       try {
         const token = localStorage.getItem("citizen_token");
-        const res = await fetch(`http://localhost:5000/api/v1/notifications/citizen?ward=${user?.ward || ''}`, {
+        const res = await fetch(`${API_URL}/notifications/citizen?ward=${user?.ward || ''}`, {
           headers: { "Authorization": `Bearer ${token}` }
         });
         const data = await res.json();

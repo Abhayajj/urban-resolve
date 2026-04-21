@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title } from 'chart.js';
 import { Pie, Bar } from 'react-chartjs-2';
+import API_URL from '../../config.js';
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title);
 
@@ -12,7 +13,7 @@ export default function AnalyticsPanel() {
     const fetchAnalytics = async () => {
       try {
         const token = localStorage.getItem("admin_token");
-        const res = await fetch("http://localhost:5000/api/v1/admin/analytics", {
+        const res = await fetch(API_URL + "/admin/analytics", {
           headers: { "Authorization": `Bearer ${token}` }
         });
         const data = await res.json();

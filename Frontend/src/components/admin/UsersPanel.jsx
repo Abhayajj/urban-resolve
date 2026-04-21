@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import API_URL from '../../config.js';
 
 export default function UsersPanel() {
   const [citizens, setCitizens] = useState([]);
@@ -17,8 +18,8 @@ export default function UsersPanel() {
       const token = localStorage.getItem("admin_token");
       const headers = { "Authorization": `Bearer ${token}` };
       const [citRes, deptRes] = await Promise.all([
-        fetch("http://localhost:5000/api/v1/admin/citizens", { headers }),
-        fetch("http://localhost:5000/api/v1/admin/departments", { headers })
+        fetch(API_URL + "/admin/citizens", { headers }),
+        fetch(API_URL + "/admin/departments", { headers })
       ]);
       setCitizens(await citRes.json());
       setDepartments(await deptRes.json());
@@ -36,7 +37,7 @@ export default function UsersPanel() {
   const handleAddDept = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:5000/api/v1/admin/register-department", {
+      const res = await fetch(API_URL + "/admin/register-department", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

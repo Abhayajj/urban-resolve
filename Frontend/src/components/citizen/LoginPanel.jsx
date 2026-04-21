@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import API_URL from '../../config.js';
 
 export default function LoginPanel({ activePanel, setActivePanel, setUser }) {
   const [isLogin, setIsLogin] = useState(true);
@@ -21,7 +22,7 @@ export default function LoginPanel({ activePanel, setActivePanel, setUser }) {
     try {
       setLoading(true);
       setError("");
-      const res = await fetch("http://localhost:5000/api/v1/citizen/login", {
+      const res = await fetch(API_URL + "/citizen/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password })
@@ -50,7 +51,7 @@ export default function LoginPanel({ activePanel, setActivePanel, setUser }) {
     try {
       setLoading(true);
       setError("");
-      const res = await fetch("http://localhost:5000/api/v1/citizen/register", {
+      const res = await fetch(API_URL + "/citizen/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
