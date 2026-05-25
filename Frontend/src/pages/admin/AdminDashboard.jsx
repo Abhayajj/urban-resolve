@@ -12,6 +12,7 @@ import NotificationsPanel from "../../components/admin/NotificationsPanel";
 import AnalyticsPanel from "../../components/admin/AnalyticsPanel";
 import LoginPanel from "../../components/admin/LoginPanel";
 import AdminProfilePanel from "../../components/admin/AdminProfilePanel";
+import GovHeader from "../../components/General/GovHeader";
 
 export default function AdminDashboard() {
   const [activePanel, setActivePanel] = useState("dashboard");
@@ -55,11 +56,18 @@ export default function AdminDashboard() {
   };
 
   if (activePanel === "login") {
-    return <LoginPanel activePanel={activePanel} />;
+    return (
+      <>
+        <GovHeader />
+        <LoginPanel activePanel={activePanel} />
+      </>
+    );
   }
 
   return (
-    <div className="v2-admin-shell" style={{ display: "flex", background: "#F8FAFC", minHeight: "100vh" }}>
+    <>
+      <GovHeader />
+      <div className="v2-admin-shell" style={{ display: "flex", background: "#F8FAFC", minHeight: "calc(100vh - 50px)" }}>
       <Sidebar
         activePanel={activePanel}
         setActivePanel={setActivePanel}
@@ -73,5 +81,6 @@ export default function AdminDashboard() {
         </main>
       </div>
     </div>
-  );
+  </>
+);
 }

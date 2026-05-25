@@ -29,7 +29,7 @@ function GNav({ activePage, setPage }) {
     };
 
     return (
-        <nav className="gnav" style={{ marginTop: 40 }}>
+        <nav className="gnav">
 
             {/* Brand logo — clicking it goes to Home */}
             <div

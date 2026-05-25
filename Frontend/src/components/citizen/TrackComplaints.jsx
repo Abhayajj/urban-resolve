@@ -6,6 +6,114 @@ export default function TrackComplaints({ activePanel }) {
   const [selectedComplaint, setSelectedComplaint] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  const handleDownloadReceipt = (c) => {
+    const printWindow = window.open("", "_blank");
+    const citizenData = JSON.parse(localStorage.getItem("citizen_data") || "{}");
+    const name = citizenData.firstName ? `${citizenData.firstName} ${citizenData.lastName}` : "Registered Citizen";
+    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://urbanresolve.gov.in/track/${c._id}`;
+
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>Grievance Receipt - ${c._id}</title>
+          <style>
+            body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; padding: 40px; color: #333; }
+            .receipt-box { border: 2px solid #333; padding: 25px; border-radius: 8px; position: relative; }
+            .header-strip { display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #333; padding-bottom: 15px; margin-bottom: 20px; }
+            .tricolor { display: flex; height: 4px; margin-bottom: 10px; }
+            .logo-sec { display: flex; align-items: center; gap: 10px; }
+            .logo-mark { font-size: 28px; }
+            .gov-text { font-size: 11px; font-weight: 800; color: #666; text-transform: uppercase; letter-spacing: 0.5px; }
+            .title { text-align: center; font-size: 18px; font-weight: 800; margin: 15px 0 5px; color: #111; letter-spacing: 0.5px; }
+            .subtitle { text-align: center; font-size: 11px; color: #555; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.5px; }
+            .details-table { width: 100%; border-collapse: collapse; margin-bottom: 25px; }
+            .details-table td { padding: 10px; border: 1px solid #ddd; font-size: 13px; }
+            .details-table td.label { font-weight: 700; background: #f9f9f9; width: 30%; }
+            .footer-sec { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 30px; border-top: 1px dashed #ccc; padding-top: 15px; }
+            .qr-code { width: 100px; height: 100px; }
+            .seal-sec { text-align: right; font-size: 11px; color: #555; }
+            .stamp { border: 2px double #16A34A; color: #16A34A; display: inline-block; padding: 5px 12px; font-weight: 800; font-size: 12px; text-transform: uppercase; border-radius: 4px; transform: rotate(-5deg); margin-bottom: 10px; }
+            .print-btn { display: block; margin: 20px auto 0; padding: 10px 20px; background: #2563EB; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+            @media print { .print-btn { display: none; } }
+          </style>
+        </head>
+        <body>
+          <div class="tricolor">
+            <div style="background: #FF9933; flex: 1;"></div>
+            <div style="background: #FFFFFF; flex: 1;"></div>
+            <div style="background: #138808; flex: 1;"></div>
+          </div>
+          <div class="receipt-box">
+            <div class="header-strip">
+              <div class="logo-sec">
+                <span class="logo-mark">🇮🇳</span>
+                <div>
+                  <div class="gov-text">Ministry of Housing and Urban Affairs</div>
+                  <div style="font-size: 13px; font-weight: 700;">Government of India | State Grievance Registry</div>
+                </div>
+              </div>
+              <div style="font-size: 11px; font-weight: 700; background: #e5e7eb; padding: 4px 8px; border-radius: 4px;">
+                TRACKING ID: GR-${c._id.slice(-6).toUpperCase()}
+              </div>
+            </div>
+            
+            <div class="title">OFFICIAL GRIEVANCE REDRESSAL RECORD</div>
+            <div class="subtitle">MUNICIPAL CORPORATION grievance acknowledgement report</div>
+            
+            <table class="details-table">
+              <tr>
+                <td class="label">Citizen Name</td>
+                <td>${name}</td>
+              </tr>
+              <tr>
+                <td class="label">Date Filed</td>
+                <td>${new Date(c.createdAt).toLocaleDateString()}</td>
+              </tr>
+              <tr>
+                <td class="label">Category</td>
+                <td>${c.category} - ${c.subCategory || "General"}</td>
+              </tr>
+              <tr>
+                <td class="label">Ward & Location</td>
+                <td>${c.ward} (${c.location})</td>
+              </tr>
+              <tr>
+                <td class="label">Grievance Title</td>
+                <td><strong>${c.title}</strong></td>
+              </tr>
+              <tr>
+                <td class="label">Description</td>
+                <td>${c.description}</td>
+              </tr>
+              <tr>
+                <td class="label">Current Status</td>
+                <td><strong>${c.status.toUpperCase()}</strong></td>
+              </tr>
+              <tr>
+                <td class="label">Resolution Details</td>
+                <td>${c.resolutionNotes || "Redressal actions are currently in progress. Updates will be broadcasted online."}</td>
+              </tr>
+            </table>
+
+            <div class="footer-sec">
+              <div>
+                <img class="qr-code" src="${qrUrl}" alt="Verification QR Code" />
+                <div style="font-size: 9px; color: #777; margin-top: 5px;">Scan QR to track status online.</div>
+              </div>
+              <div class="seal-sec">
+                <div class="stamp">Urban Resolve e-Verified</div>
+                <div style="font-weight: 700;">DIGITALLY SIGNED E-PORTAL DIVISION</div>
+                <div style="font-size: 10px; color: #777;">Aadhaar gateway e-stamp verified.</div>
+              </div>
+            </div>
+          </div>
+          <button class="print-btn" onclick="window.print()">Print Grievance Ticket</button>
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+  };
+
   useEffect(() => {
     if (activePanel !== "cp-track") return;
 
@@ -152,6 +260,14 @@ export default function TrackComplaints({ activePanel }) {
                       >
                         <span className="cid">#{selectedComplaint._id.slice(-4)}</span>
                         <span className={`badge ${getStatusClass(selectedComplaint.status)}`}>{selectedComplaint.status}</span>
+                        <button 
+                          type="button"
+                          className="btn btn-ghost btn-sm"
+                          onClick={() => handleDownloadReceipt(selectedComplaint)}
+                          style={{ marginLeft: "auto", fontSize: 11, padding: "3px 10px", borderColor: "var(--blue)" }}
+                        >
+                          📄 Download Receipt
+                        </button>
                       </div>
 
                       <div

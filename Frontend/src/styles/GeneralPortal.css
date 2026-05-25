@@ -37,7 +37,7 @@ input, select, textarea { font-family: inherit; outline: none; }
 
 /* ── TOPBAR ── */
 .topbar {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  position: relative; z-index: 1000;
   height: 40px; background: var(--i1);
   display: flex; align-items: center; padding: 0 18px; gap: 6px;
 }
@@ -318,3 +318,86 @@ textarea.form-input { resize: vertical; min-height: 90px; }
   .testi-grid { grid-template-columns: 1fr; }
   .form-grid { grid-template-columns: 1fr; }
 }
+
+/* ── GIGW HIGH CONTRAST OVERRIDES ── */
+html.high-contrast,
+html.high-contrast body,
+html.high-contrast .topbar,
+html.high-contrast .gnav,
+html.high-contrast .gov-header-wrapper,
+html.high-contrast .gov-info-strip,
+html.high-contrast .hero-section,
+html.high-contrast .sec-wrap,
+html.high-contrast .process-bg,
+html.high-contrast .cta-section,
+html.high-contrast .footer,
+html.high-contrast .card,
+html.high-contrast .contact-card,
+html.high-contrast .faq-item,
+html.high-contrast .guide-item {
+  background: #000000 !important;
+  color: #FFFFFF !important;
+  border-color: #FFFFFF !important;
+  background-image: none !important;
+}
+html.high-contrast h1,
+html.high-contrast h2,
+html.high-contrast h3,
+html.high-contrast h4,
+html.high-contrast h5,
+html.high-contrast h6,
+html.high-contrast strong,
+html.high-contrast a,
+html.high-contrast .gnav-link,
+html.high-contrast .gnav-brand,
+html.high-contrast .hero-title,
+html.high-contrast .sec-title,
+html.high-contrast .process-num,
+html.high-contrast .process-title,
+html.high-contrast .stat-val-new,
+html.high-contrast .faq-q,
+html.high-contrast .cc-value,
+html.high-contrast .cc-label,
+html.high-contrast .form-label {
+  color: #FFFF00 !important;
+}
+html.high-contrast .btn,
+html.high-contrast .gnav-btn-solid,
+html.high-contrast .gnav-btn-ghost,
+html.high-contrast .sbtn,
+html.high-contrast .cta-btn-p,
+html.high-contrast .hbtn-primary,
+html.high-contrast .hbtn-ghost {
+  background: #000000 !important;
+  color: #FFFFFF !important;
+  border: 2px solid #FFFFFF !important;
+}
+html.high-contrast .btn:hover,
+html.high-contrast .gnav-btn-solid:hover,
+html.high-contrast .gnav-btn-ghost:hover,
+html.high-contrast .sbtn:hover,
+html.high-contrast .cta-btn-p:hover,
+html.high-contrast .hbtn-primary:hover,
+html.high-contrast .hbtn-ghost:hover {
+  background: #FFFF00 !important;
+  color: #000000 !important;
+  border-color: #FFFF00 !important;
+}
+html.high-contrast .form-input,
+html.high-contrast select,
+html.high-contrast textarea,
+html.high-contrast input {
+  background: #000000 !important;
+  color: #FFFF00 !important;
+  border: 2px solid #FFFFFF !important;
+}
+html.high-contrast .svc-card-new,
+html.high-contrast .testi-card {
+  background: #000000 !important;
+  border: 2px solid #FFFFFF !important;
+  box-shadow: none !important;
+}
+html.high-contrast .guide-num {
+  background: #FFFF00 !important;
+  color: #000000 !important;
+}

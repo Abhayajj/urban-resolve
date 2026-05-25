@@ -47,6 +47,7 @@ const noticeRoutes = require('./src/routes/noticeRoutes');
 const contactRoutes = require('./src/routes/contactRoutes');
 const notificationRoutes = require('./src/routes/notificationRoutes');
 const messageRoutes = require('./src/routes/messageRoutes');
+const aiRoutes = require('./src/routes/aiRoutes');
 
 // Mount routes
 app.use('/api/v1/admin', adminRoutes);
@@ -57,6 +58,7 @@ app.use('/api/v1/notices', noticeRoutes);
 app.use('/api/v1/contact', contactRoutes);
 app.use('/api/v1/notifications', notificationRoutes);
 app.use('/api/v1/messages', messageRoutes);
+app.use('/api/v1/ai', aiRoutes);
 
 // ✅ DEBUG (optional but powerful)
 app.use((req, res, next) => {

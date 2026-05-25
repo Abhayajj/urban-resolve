@@ -12,11 +12,13 @@ import Register from "./Register";
 import Notices from "./Notices";
 import GNav from "../../components/General/GNav";
 import Topbar from "../../components/General/Topbar";
+import GovHeader from "../../components/General/GovHeader";
 
 export default function GeneralPortal() {
   return (
     <>
-
+      <GovHeader />
+      <Topbar />
       <GNav />
 
       <Routes>

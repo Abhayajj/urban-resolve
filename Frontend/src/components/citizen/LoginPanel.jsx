@@ -17,6 +17,13 @@ export default function LoginPanel({ activePanel, setActivePanel, setUser }) {
   const [ward, setWard] = useState("");
   const [block, setBlock] = useState("");
 
+  // DigiLocker States
+  const [showDigiLocker, setShowDigiLocker] = useState(false);
+  const [digiLockerStep, setDigiLockerStep] = useState("aadhaar");
+  const [digiLockerAadhaar, setDigiLockerAadhaar] = useState("");
+  const [digiLockerOtp, setDigiLockerOtp] = useState("");
+  const [digiLockerLoading, setDigiLockerLoading] = useState(false);
+
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -79,6 +86,51 @@ export default function LoginPanel({ activePanel, setActivePanel, setUser }) {
     }
   };
 
+  const handleSendAadhaarOtp = () => {
+    if (!digiLockerAadhaar.trim() || digiLockerAadhaar.replace(/-/g, "").length !== 12) {
+      alert("Please enter a valid 12-digit Aadhaar number");
+      return;
+    }
+    setDigiLockerLoading(true);
+    setTimeout(() => {
+      setDigiLockerLoading(false);
+      setDigiLockerStep("otp");
+    }, 1000);
+  };
+
+  const handleVerifyAadhaarOtp = async () => {
+    if (!digiLockerOtp.trim() || digiLockerOtp.length !== 6) {
+      alert("Please enter a valid 6-digit OTP");
+      return;
+    }
+    setDigiLockerLoading(true);
+    try {
+      // Mock login as the seeded user rahul@test.com
+      const res = await fetch(API_URL + "/citizen/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: "rahul@test.com", password: "password123" })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        localStorage.setItem("citizen_token", data.token);
+        // Save flag indicating DigiLocker verification in both localStorage and React state
+        const verifiedData = { ...data, isDigiLockerVerified: true };
+        localStorage.setItem("citizen_data", JSON.stringify(verifiedData));
+        setSuccess("DigiLocker e-Verification Successful!");
+        setShowDigiLocker(false);
+        if (setUser) setUser(verifiedData);
+        if (setActivePanel) setActivePanel("cp-dash");
+      } else {
+        alert("DigiLocker synchronization failed: " + data.message);
+      }
+    } catch (err) {
+      alert("DigiLocker gateway connection timeout");
+    } finally {
+      setDigiLockerLoading(false);
+    }
+  };
+
   return (
     <div className={`login-v2-container ${activePanel === "cp-login" ? "active" : ""}`}>
       <div className="login-v2-glass">
@@ -115,6 +167,27 @@ export default function LoginPanel({ activePanel, setActivePanel, setUser }) {
               {success && <div className="v2-succ-msg">{success}</div>}
               <button type="submit" className="v2-main-btn" disabled={loading}>
                 {loading ? "Verifying..." : "Sign In"}
+              </button>
+              <div style={{ margin: "16px 0 10px", display: "flex", alignItems: "center", gap: 10 }}>
+                <div style={{ flex: 1, height: "1px", background: "#E5E7EB" }} />
+                <span style={{ fontSize: 10, fontWeight: 700, color: "#9CA3AF" }}>OR</span>
+                <div style={{ flex: 1, height: "1px", background: "#E5E7EB" }} />
+              </div>
+              <button 
+                type="button" 
+                className="v2-main-btn" 
+                onClick={() => { setShowDigiLocker(true); setDigiLockerStep("aadhaar"); }}
+                style={{ 
+                  background: "#1E3A8A", 
+                  borderColor: "#3B82F6", 
+                  display: "flex", 
+                  alignItems: "center", 
+                  justifyContent: "center", 
+                  gap: 8, 
+                  marginTop: 0
+                }}
+              >
+                🔐 Sign In with DigiLocker / Aadhaar
               </button>
             </form>
           ) : (
@@ -233,6 +306,99 @@ export default function LoginPanel({ activePanel, setActivePanel, setUser }) {
           .scroll-form { max-height: none; }
         }
       `}</style>
+      
+      {showDigiLocker && (
+        <div style={{
+          position: "fixed", top: 0, left: 0, right: 0, bottom: 0,
+          background: "rgba(0,0,0,0.5)", backdropFilter: "blur(6px)",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          zIndex: 10003, fontFamily: "system-ui, -apple-system, sans-serif"
+        }}>
+          <div style={{
+            background: "#fff", padding: "26px", borderRadius: "20px",
+            width: "380px", boxShadow: "0 20px 48px rgba(0,0,0,0.3)",
+            border: "1px solid #E5E7EB", boxSizing: "border-box"
+          }}>
+            {/* Header */}
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 20 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <span style={{ fontSize: 24 }}>🔒</span>
+                <div>
+                  <h4 style={{ margin: 0, fontSize: 15, fontWeight: 800, color: "#1E3A8A" }}>DigiLocker Gateway</h4>
+                  <p style={{ margin: 0, fontSize: 8, color: "#9CA3AF", textTransform: "uppercase", letterSpacing: 0.5 }}>Ministry of IT, India</p>
+                </div>
+              </div>
+              <button 
+                type="button" 
+                onClick={() => { setShowDigiLocker(false); setDigiLockerStep("aadhaar"); }}
+                style={{ background: "none", border: "none", fontSize: 22, cursor: "pointer", color: "#9CA3AF" }}
+              >
+                ×
+              </button>
+            </div>
+
+            {digiLockerStep === "aadhaar" ? (
+              <div>
+                <p style={{ fontSize: 12.5, color: "#4B5563", marginBottom: 15, lineHeight: 1.5 }}>
+                  Enter your 12-digit Aadhaar number to sync your verified profile documents from the Government registry.
+                </p>
+                <div style={{ display: "flex", flexDirection: "column", gap: 6, marginBottom: 15 }}>
+                  <label style={{ fontSize: 11.5, fontWeight: 700, color: "#374151" }}>Aadhaar Number</label>
+                  <input 
+                    type="text" 
+                    placeholder="1234-5678-9101" 
+                    value={digiLockerAadhaar} 
+                    onChange={e => setDigiLockerAadhaar(e.target.value)} 
+                    style={{ padding: "10px 14px", border: "1px solid #D1D5DB", borderRadius: "10px", outline: "none", fontSize: 14 }}
+                    maxLength={14}
+                    required 
+                  />
+                </div>
+                <button 
+                  type="button" 
+                  className="v2-main-btn"
+                  onClick={handleSendAadhaarOtp}
+                  disabled={digiLockerLoading}
+                  style={{ background: "#2563EB", marginTop: 0 }}
+                >
+                  {digiLockerLoading ? "Sending OTP..." : "Get Verification OTP"}
+                </button>
+              </div>
+            ) : (
+              <div>
+                <p style={{ fontSize: 12.5, color: "#4B5563", marginBottom: 15, lineHeight: 1.5 }}>
+                  Enter the 6-digit OTP sent to your Aadhaar-linked mobile number (**-****-3210).
+                </p>
+                <div style={{ display: "flex", flexDirection: "column", gap: 6, marginBottom: 15 }}>
+                  <label style={{ fontSize: 11.5, fontWeight: 700, color: "#374151" }}>Enter OTP Code</label>
+                  <input 
+                    type="text" 
+                    placeholder="123456" 
+                    value={digiLockerOtp} 
+                    onChange={e => setDigiLockerOtp(e.target.value)} 
+                    style={{ padding: "10px 14px", border: "1px solid #D1D5DB", borderRadius: "10px", outline: "none", fontSize: 14, letterSpacing: "2px", textAlign: "center" }}
+                    maxLength={6}
+                    required 
+                  />
+                </div>
+                <button 
+                  type="button" 
+                  className="v2-main-btn"
+                  onClick={handleVerifyAadhaarOtp}
+                  disabled={digiLockerLoading}
+                  style={{ background: "#10B981", marginTop: 0 }}
+                >
+                  {digiLockerLoading ? "Verifying..." : "Verify & Log In"}
+                </button>
+              </div>
+            )}
+            
+            <div style={{ marginTop: 22, textAlign: "center", fontSize: 9.5, color: "#9CA3AF", display: "flex", alignItems: "center", justifyContent: "center", gap: 4 }}>
+              <span>🇮🇳</span> National e-Governance Division (NeGD)
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

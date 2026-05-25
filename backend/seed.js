@@ -16,7 +16,6 @@ const seedData = async () => {
     // Connect to DB
     await mongoose.connect(process.env.MONGO_URI);
     console.log('MongoDB Connected for seeding...');
-
     // Clear existing data
     await Admin.deleteMany();
     await Citizen.deleteMany();
@@ -31,7 +30,7 @@ const seedData = async () => {
     const admin = await Admin.create({
       name: 'Super Admin',
       email: 'admin@smartcity.com',
-      password: 'password123', // Model middleware will hash this automatically if we use Admin.create
+      password: 'Admin@SuperSecure2024!', // Model middleware will hash this automatically if we use Admin.create
     });
 
     // 2. Create Citizen
@@ -52,28 +51,28 @@ const seedData = async () => {
       name: 'Amit Singh',
       email: 'water@smartcity.com',
       departmentName: 'Water Supply',
-      password: 'password123',
+      password: 'Water@Secure2024!',
     });
 
     const electricDept = await Department.create({
       name: 'Suresh Raina',
       email: 'electric@smartcity.com',
       departmentName: 'Electricity Board',
-      password: 'password123',
+      password: 'Electric@Power2024!',
     });
 
     const roadsDept = await Department.create({
       name: 'Nitin Gadkari',
       email: 'roads@smartcity.com',
       departmentName: 'Roads & Infrastructure',
-      password: 'password123',
+      password: 'Roads@City2024!',
     });
 
     const sanitationDept = await Department.create({
       name: 'Swachh Bharat',
       email: 'sanitation@smartcity.com',
       departmentName: 'Sanitation',
-      password: 'password123',
+      password: 'Sanit@Clean2024!',
     });
 
     // 4. Create Notice
@@ -130,10 +129,11 @@ const seedData = async () => {
 
     console.log('Data Seeded Successfully!');
     console.log('-------------------------');
-    console.log('Water Dept: water@smartcity.com / password123');
-    console.log('Electric Dept: electric@smartcity.com / password123');
-    console.log('Roads Dept: roads@smartcity.com / password123');
-    console.log('Sanitation Dept: sanitation@smartcity.com / password123');
+    console.log('Admin: admin@smartcity.com / Admin@SuperSecure2024!');
+    console.log('Water Dept: water@smartcity.com / Water@Secure2024!');
+    console.log('Electric Dept: electric@smartcity.com / Electric@Power2024!');
+    console.log('Roads Dept: roads@smartcity.com / Roads@City2024!');
+    console.log('Sanitation Dept: sanitation@smartcity.com / Sanit@Clean2024!');
     console.log('-------------------------');
     process.exit();
   } catch (error) {

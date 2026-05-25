@@ -52,13 +52,13 @@ input,select,textarea{font-family:var(--font-body);outline:none;}
 img{max-width:100%;display:block;}
 
 /* ── TOPBAR ── */
-.topbar{position:fixed;top:0;left:0;right:0;z-index:1000;height:42px;background:var(--navy);display:flex;align-items:center;padding:0 18px;gap:6px;}
+.topbar{position:relative;z-index:1000;height:42px;background:var(--navy);display:flex;align-items:center;padding:0 18px;gap:6px;}
 .topbar-logo{font-family:var(--font-display);font-size:13px;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px;margin-right:10px;}
 .topbar-logo-mark{width:26px;height:26px;background:var(--blue3);border-radius:7px;display:flex;align-items:center;justify-content:center;}
 .topbar-sep{width:1px;height:16px;background:rgba(255,255,255,.15);margin:0 6px;}
 .topbar-link{padding:4px 11px;border-radius:99px;font-size:12px;font-weight:600;color:rgba(255,255,255,.55);cursor:pointer;transition:var(--transition);}
 .topbar-link:hover{color:#fff;background:rgba(255,255,255,.1);}
-.topbar-link.active{color:#fff;background:var(--blue);border:1px solid rgba(255,255,255,.2);}
+.topbar-link.active{color:#fff;background:var(--blue);border:1px solid rgba(255,255,255,.2);;}
 .topbar-right{margin-left:auto;display:flex;align-items:center;gap:8px;}
 .topbar-badge{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:99px;}
 .topbar-badge.admin{background:rgba(220,38,38,.3);color:#fca5a5;}
@@ -66,7 +66,7 @@ img{max-width:100%;display:block;}
 .topbar-badge.citizen{background:rgba(22,163,74,.3);color:#86efac;}
 
 /* ── APP SHELL ── */
-.app-shell{display:flex;margin-top:42px;height:calc(100vh - 42px);overflow:hidden;}
+.app-shell{display:flex;margin-top:0;height:calc(100vh - 42px - 50px);overflow:hidden;}
 
 /* ── SIDEBAR ── */
 .sidebar{width:var(--sidebar);background:var(--white);border-right:1px solid var(--gray-100);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto;transition:width .25s;}
@@ -96,7 +96,7 @@ img{max-width:100%;display:block;}
 .logout-btn:hover{background:var(--red-bg);color:var(--red);}
 
 /* ── MAIN ── */
-.main-wrap{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0;}
+.main-wrap{flex:1;display:flex;flex-direction:column;overflow-y:auto;min-width:0;}
 
 /* ── HEADER ── */
 .page-header{height:var(--header);background:var(--white);border-bottom:1px solid var(--gray-100);display:flex;align-items:center;padding:0 22px;gap:14px;flex-shrink:0;}
@@ -313,3 +313,96 @@ textarea.form-input{resize:vertical;min-height:88px;}
 @media(max-width:1100px){.stat-grid{grid-template-columns:repeat(3,1fr);} .stat-grid.four{grid-template-columns:repeat(2,1fr);}}
 @media(max-width:900px){.stat-grid{grid-template-columns:repeat(2,1fr);} .grid-2{grid-template-columns:1fr;} .form-grid{grid-template-columns:1fr;}}
 @media(max-width:768px){.sidebar{display:none;} .page-body{padding:14px;} .stat-grid{grid-template-columns:1fr 1fr;} table.tbl th:nth-child(n+5),table.tbl td:nth-child(n+5){display:none;}}
+
+/* ── GIGW HIGH CONTRAST OVERRIDES ── */
+html.high-contrast, 
+html.high-contrast body,
+html.high-contrast .main-wrap,
+html.high-contrast .page-body,
+html.high-contrast .card,
+html.high-contrast .sidebar,
+html.high-contrast .app-shell,
+html.high-contrast .gnav,
+html.high-contrast .topbar,
+html.high-contrast .gov-header-wrapper,
+html.high-contrast .gov-info-strip {
+  background: #000000 !important;
+  color: #FFFFFF !important;
+  border-color: #FFFFFF !important;
+}
+html.high-contrast h1,
+html.high-contrast h2,
+html.high-contrast h3,
+html.high-contrast h4,
+html.high-contrast h5,
+html.high-contrast h6,
+html.high-contrast strong,
+html.high-contrast a,
+html.high-contrast .nav-item,
+html.high-contrast .nav-item .ni,
+html.high-contrast .card-title,
+html.high-contrast .form-label,
+html.high-contrast table.tbl th,
+html.high-contrast table.tbl td,
+html.high-contrast .hdr-title,
+html.high-contrast .profile-name,
+html.high-contrast .brand-dot,
+html.high-contrast .v2-branding,
+html.high-contrast .login-v2-left h1,
+html.high-contrast .login-v2-left p {
+  color: #FFFF00 !important;
+}
+html.high-contrast .btn,
+html.high-contrast .gnav-btn-solid,
+html.high-contrast .gnav-btn-ghost,
+html.high-contrast .btn-primary,
+html.high-contrast .btn-ghost,
+html.high-contrast .v2-main-btn {
+  background: #000000 !important;
+  color: #FFFFFF !important;
+  border: 2px solid #FFFFFF !important;
+}
+html.high-contrast .btn:hover,
+html.high-contrast .gnav-btn-solid:hover,
+html.high-contrast .gnav-btn-ghost:hover,
+html.high-contrast .v2-main-btn:hover {
+  background: #FFFF00 !important;
+  color: #000000 !important;
+  border-color: #FFFF00 !important;
+}
+html.high-contrast .nav-item.active {
+  background: #FFFF00 !important;
+  color: #000000 !important;
+  border: 1px solid #FFFF00 !important;
+}
+html.high-contrast .nav-item.active .nav-label {
+  color: #000000 !important;
+}
+html.high-contrast .form-input,
+html.high-contrast select,
+html.high-contrast textarea,
+html.high-contrast input {
+  background: #000000 !important;
+  color: #FFFF00 !important;
+  border: 2px solid #FFFFFF !important;
+}
+html.high-contrast .badge,
+html.high-contrast .cid {
+  background: #000000 !important;
+  color: #FFFF00 !important;
+  border: 1.5px solid #FFFF00 !important;
+}
+html.high-contrast .stat-card {
+  border: 2px solid #FFFFFF !important;
+  background: #000000 !important;
+}
+html.high-contrast .stat-card::before {
+  background: #FFFF00 !important;
+}
+html.high-contrast .login-v2-glass,
+html.high-contrast .login-v2-right {
+  background: #000000 !important;
+  color: #FFFFFF !important;
+  border: 2px solid #FFFFFF !important;
+}
+

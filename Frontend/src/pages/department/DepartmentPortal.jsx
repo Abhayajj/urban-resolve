@@ -7,6 +7,7 @@ import ResolutionManagementPanel from "../../components/department/ResolutionMan
 import CommunicationsPanel from "../../components/department/CommunicationsPanel";
 import DeptLoginPanel from "../../components/department/DeptLoginPanel";
 import ProfilePanel from "../../components/department/ProfilePanel";
+import GovHeader from "../../components/General/GovHeader";
 
 import "../../styles/sc-styles.css";
 
@@ -32,12 +33,18 @@ export default function DepartmentPortal() {
   };
 
   if (activePanel === "dp-login") {
-    return <DeptLoginPanel activePanel={activePanel} />;
+    return (
+      <>
+        <GovHeader />
+        <DeptLoginPanel activePanel={activePanel} />
+      </>
+    );
   }
 
   return (
     <>
-      <div className="app-shell" style={{ marginTop: 0, height: "100vh", background: "#F1F5F9" }}>
+      <GovHeader />
+      <div className="app-shell" style={{ marginTop: 0, height: "calc(100vh - 50px)", background: "#F1F5F9" }}>
         {/* SIDEBAR */}
         <aside className="sidebar" style={{ background: "#fff", borderRight: "1px solid #E2E8F0", boxShadow: "4px 0 10px rgba(0,0,0,0.02)" }}>
           

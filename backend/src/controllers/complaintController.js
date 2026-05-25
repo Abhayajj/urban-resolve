@@ -1,4 +1,6 @@
 const Complaint = require("../models/complaintModel");
+const Department = require("../models/departmentModel");
+const { classifyComplaint } = require("../utils/aiClassifier");
 
 /* GET ALL COMPLAINTS */
 const getAllComplaints = async (req, res) => {
@@ -42,6 +44,42 @@ const createComplaint = async (req, res) => {
     if (req.user && req.user.id) {
       req.body.citizenId = req.user.id;
     }
+
+    const { title, description } = req.body;
+    
+    // AI Auto-classification
+    const aiResult = await classifyComplaint(title, description);
+    if (aiResult) {
+      req.body.category = aiResult.category;
+      req.body.subCategory = aiResult.subCategory;
+      req.body.priority = aiResult.priority;
+      console.log(`[AI Classifier] Auto-classified complaint:
+        Category: ${aiResult.category}
+        SubCategory: ${aiResult.subCategory}
+        Priority: ${aiResult.priority}
+        Reason: ${aiResult.reason}`);
+    }
+
+    // Auto-routing to department based on category
+    let mappedDeptName = null;
+    if (req.body.category === "Water Supply") mappedDeptName = "Water Supply";
+    else if (req.body.category === "Electricity") mappedDeptName = "Electricity Board";
+    else if (req.body.category === "Roads") mappedDeptName = "Roads & Infrastructure";
+    else if (req.body.category === "Sanitation") mappedDeptName = "Sanitation";
+    else if (req.body.category === "Street Lights") mappedDeptName = "Street Lights Dept";
+
+    if (mappedDeptName) {
+      let dept = await Department.findOne({ departmentName: mappedDeptName });
+      // Fallback for Street Lights Dept to Electricity Board if not found
+      if (!dept && mappedDeptName === "Street Lights Dept") {
+        dept = await Department.findOne({ departmentName: "Electricity Board" });
+      }
+      if (dept) {
+        req.body.departmentAssigned = dept._id;
+        console.log(`[AI Routing] Assigned to department: ${mappedDeptName} (ID: ${dept._id})`);
+      }
+    }
+
     const newComplaint = new Complaint(req.body);
     const savedComplaint = await newComplaint.save();
     res.status(201).json(savedComplaint);
@@ -53,10 +91,15 @@ const createComplaint = async (req, res) => {
 /* UPDATE COMPLAINT STATUS (Dept/Admin) */
 const updateComplaintStatus = async (req, res) => {
   try {
-    const { status, resolutionNotes } = req.body;
+    const { status, resolutionNotes, departmentAssigned } = req.body;
+    const updateData = {};
+    if (status !== undefined) updateData.status = status;
+    if (resolutionNotes !== undefined) updateData.resolutionNotes = resolutionNotes;
+    if (departmentAssigned !== undefined) updateData.departmentAssigned = departmentAssigned;
+
     const updated = await Complaint.findByIdAndUpdate(
       req.params.id,
-      { status, resolutionNotes },
+      updateData,
       { new: true }
     );
     if (!updated) return res.status(404).json({ message: "Not found" });
