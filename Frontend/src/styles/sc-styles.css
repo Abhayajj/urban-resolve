@@ -406,3 +406,168 @@ html.high-contrast .login-v2-right {
   border: 2px solid #FFFFFF !important;
 }
 
+/* ── ADDITIONAL ACCESSIBILITY HIGH CONTRAST OVERRIDES ── */
+html.high-contrast .user-name {
+  color: #FFFF00 !important;
+}
+html.high-contrast .user-sub,
+html.high-contrast .profile-role {
+  color: #FFFFFF !important;
+}
+html.high-contrast .user-av {
+  background: #000000 !important;
+  color: #FFFFFF !important;
+  border: 2px solid #FFFFFF !important;
+}
+html.high-contrast .nav-section {
+  color: #FFFF00 !important;
+}
+html.high-contrast .nav-item {
+  color: #FFFFFF !important;
+}
+html.high-contrast .ni {
+  color: #FFFFFF !important;
+}
+html.high-contrast .nav-item.active {
+  color: #000000 !important;
+}
+html.high-contrast .nav-item.active .nav-label {
+  color: #000000 !important;
+}
+html.high-contrast .nbadge {
+  background: #000000 !important;
+  color: #FFFFFF !important;
+  border: 1.5px solid #FFFFFF !important;
+}
+html.high-contrast .stat-val {
+  color: #FFFF00 !important;
+}
+html.high-contrast .stat-lbl {
+  color: #FFFFFF !important;
+}
+html.high-contrast .stat-trend,
+html.high-contrast .stat-trend.neu,
+html.high-contrast .stat-trend.up,
+html.high-contrast .stat-trend.dn {
+  color: #FFFFFF !important;
+}
+html.high-contrast .stat-icon {
+  background: #000000 !important;
+  border: 1.5px solid #FFFFFF !important;
+}
+html.high-contrast .stat-icon svg {
+  stroke: #FFFF00 !important;
+}
+html.high-contrast .dash-banner {
+  background: #000000 !important;
+  border: 2.5px solid #FFFFFF !important;
+}
+html.high-contrast .dash-banner * {
+  color: #FFFFFF !important;
+}
+html.high-contrast .dash-banner button {
+  background: #000000 !important;
+  color: #FFFF00 !important;
+  border: 2px solid #FFFF00 !important;
+}
+html.high-contrast .dash-banner button:hover {
+  background: #FFFF00 !important;
+  color: #000000 !important;
+  border-color: #FFFF00 !important;
+}
+html.high-contrast .profile-chip {
+  background: #000000 !important;
+  border: 1.5px solid #FFFFFF !important;
+}
+
+/* Gov Header high contrast overrides */
+html.high-contrast .gov-dept-text,
+html.high-contrast .gov-acc-btn,
+html.high-contrast .gov-size-btn,
+html.high-contrast .gov-lang-btn {
+  color: #FFFFFF !important;
+}
+html.high-contrast .gov-size-btn.active,
+html.high-contrast .gov-lang-btn.active {
+  color: #000000 !important;
+  background: #FFFF00 !important;
+  border-color: #FFFF00 !important;
+}
+html.high-contrast .gov-dot-gov-badge {
+  background: #000000 !important;
+  color: #FFFF00 !important;
+  border: 1.5px solid #FFFF00 !important;
+}
+
+/* UrbanAI Copilot high contrast overrides */
+html.high-contrast .urban-ai-fab {
+  background: #000000 !important;
+  color: #FFFFFF !important;
+  border: 2px solid #FFFFFF !important;
+}
+html.high-contrast .urban-ai-window {
+  background: #000000 !important;
+  color: #FFFFFF !important;
+  border: 2.5px solid #FFFFFF !important;
+}
+html.high-contrast .urban-ai-messages {
+  background: #000000 !important;
+}
+html.high-contrast .theirs .msg-bubble {
+  background: #000000 !important;
+  color: #FFFFFF !important;
+  border: 1.5px solid #FFFFFF !important;
+}
+html.high-contrast .mine .msg-bubble {
+  background: #000000 !important;
+  color: #FFFF00 !important;
+  border: 1.5px solid #FFFF00 !important;
+}
+html.high-contrast .urban-ai-input-box {
+  background: #000000 !important;
+  border-top: 1.5px solid #FFFFFF !important;
+}
+html.high-contrast .urban-ai-input-box input {
+  background: #000000 !important;
+  color: #FFFF00 !important;
+  border: 1.5px solid #FFFFFF !important;
+}
+html.high-contrast .urban-ai-input-box button {
+  background: #000000 !important;
+  color: #FFFFFF !important;
+  border: 1.5px solid #FFFFFF !important;
+}
+html.high-contrast .urban-ai-shortcuts {
+  background: #000000 !important;
+  border-top: 1.5px solid #FFFFFF !important;
+}
+html.high-contrast .urban-ai-shortcuts button {
+  background: #000000 !important;
+  color: #FFFFFF !important;
+  border: 1.5px solid #FFFFFF !important;
+}
+html.high-contrast .ai-draft-card {
+  background: #000000 !important;
+  border: 1.5px solid #FFFF00 !important;
+  color: #FFFFFF !important;
+}
+html.high-contrast .ai-draft-card h5 {
+  color: #FFFF00 !important;
+}
+html.high-contrast .draft-field {
+  color: #FFFFFF !important;
+}
+html.high-contrast .draft-field strong {
+  color: #FFFF00 !important;
+}
+html.high-contrast .btn-autofill {
+  background: #000000 !important;
+  color: #FFFF00 !important;
+  border: 1.5px solid #FFFF00 !important;
+}
+html.high-contrast .btn-autofill:hover {
+  background: #FFFF00 !important;
+  color: #000000 !important;
+  border-color: #FFFF00 !important;
+}
+

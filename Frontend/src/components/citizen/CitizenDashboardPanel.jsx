@@ -102,6 +102,7 @@ export default function CitizenDashboardPanel({ setActivePanel, user, lang = "EN
         </div>
 
         <div
+          className="dash-banner"
           style={{
             background: "linear-gradient(135deg,var(--navy2),var(--blue2))",
             borderRadius: 14,
