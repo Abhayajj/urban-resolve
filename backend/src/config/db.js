@@ -2,7 +2,23 @@ const mongoose = require('mongoose');
 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGO_URI, {
+    const rawUri = process.env.MONGO_URI || '';
+    const trimmedUri = rawUri.trim();
+    if (rawUri !== trimmedUri) {
+      console.warn("⚠️ WARNING: MONGO_URI has leading/trailing whitespaces! Length:", rawUri.length, "vs trimmed:", trimmedUri.length);
+    }
+    
+    // Mask password in logs
+    let maskedUri = rawUri;
+    try {
+      const match = rawUri.match(/:([^:]+)@/);
+      if (match) {
+        maskedUri = rawUri.replace(match[1], "***");
+      }
+    } catch (e) {}
+    console.log(`Connecting to MongoDB Atlas... URI (masked): ${maskedUri}`);
+
+    const conn = await mongoose.connect(trimmedUri, {
       serverSelectionTimeoutMS: 10000,
     });
     console.log(`MongoDB Connected: ${conn.connection.host}`);
